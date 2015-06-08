@@ -172,9 +172,19 @@ func (s *ParseSession) GetMeInto(user interface{}) error {
 	return do(s.get("/users/me", false), user)
 }
 
-// DeleteUser deletes user by ID
+// DeleteUser deletes user
 func (s *ParseSession) DeleteUser(userID string) error {
-	return do(s.del("/users/"+userID, false), nil)
+	return s.deleteUser(userID, false)
+}
+
+// DeleteUser deletes user by use master key
+func (s *ParseSession) DeleteUserByMaster(userID string) error {
+	return s.deleteUser(userID, true)
+}
+
+// DeleteUser deletes user by private
+func (s *ParseSession) deleteUser(userID string, useMaster bool) error {
+	return do(s.del("/users/"+userID, useMaster), nil)
 }
 
 // UploadInstallation stores the subscription data for installations

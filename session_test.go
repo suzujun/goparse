@@ -237,6 +237,16 @@ func TestParseSession(t *testing.T) {
 						})
 					})
 
+					Convey("When delete user with empty masterKey", func() {
+
+						sessionInMaster.client.MasterKey = ""
+						err := sessionInMaster.DeleteUserByMaster(user.ObjectID)
+
+						Convey("It returns error", func() {
+							So(err, ShouldNotBeNil)
+						})
+					})
+
 					Convey("When get user into provided object with empty sessionToken", func() {
 
 						var user2 User
